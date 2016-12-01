@@ -1,0 +1,85 @@
+#!/usr/bin/env python
+
+from __future__ import division, print_function
+from sys import argv
+from random import shuffle
+import vlc
+from time import sleep
+
+# import and initialize ivona
+from ivona_api.ivona_api import IvonaAPI, IvonaAPIException
+import yaml
+keys = yaml.load(open('secret.yaml').read())
+ivona_api = IvonaAPI(keys['ivona-access-key'],keys['ivona-secret-key'],voice_name='Joey',language='en-US',region='us-east-1')
+
+# import wordnik API
+from wordnik import *
+apiUrl = 'http://api.wordnik.com/v4'
+apiKey = '***REMOVED***'
+client = swagger.ApiClient(apiKey, apiUrl)
+wordApi = WordApi.WordApi(client)
+
+# download audio from Amazon's ivona and save
+def get_audio(sentence):
+    ivona_api.text_to_speech(sentence,'/tmp/spell_audio.mp3')
+
+# play saved mp3 file
+def play_mp3(fn):
+    vlc.MediaPlayer("file://"+fn).play()
+    sleep(2)
+
+# print definitions of word
+def print_definitions(word):
+    definitions = wordApi.getDefinitions(word)
+    for i,definition in enumerate(definitions):
+        print(i+1,definition.text)
+
+try:
+  word_list = open(argv[1]).read().strip().lower().split('\n')
+  shuffle(word_list)
+  nwords = len(word_list)
+  sentence = "There are "+str(nwords)+" words in your list"
+  print(sentence)
+  get_audio(sentence)
+  play_mp3("/tmp/spell_audio.mp3")
+  ncorrect = 0
+  for word in word_list:
+    response = 'r'
+    first = True
+    while response == 'r':
+      sentence = "Please spell "+word+", enter 'r' to repeat or 'g' to give up: "
+      get_audio(sentence)
+      play_mp3("/tmp/spell_audio.mp3")
+      response = raw_input("Spell word, enter 'r' to repeat or 'g' to give up: ")
+      response = response.lower()
+      if (response != word) and (response != 'r') and (response != 'g'):
+        sentence = "Incorrect..."
+        print(sentence)
+        get_audio(sentence)
+        play_mp3("/tmp/spell_audio.mp3")
+        response = 'r'
+        first = False
+      elif response == word:
+        sentence = "Correct!"
+        print(sentence)
+        get_audio(sentence)
+        play_mp3("/tmp/spell_audio.mp3")
+        print_definitions(word)
+        if first:
+          ncorrect += 1
+      elif response == 'g':
+        sentence = "The correct spelling of "+word+" is "+" ".join([l for l in word])+"."
+        print(sentence)
+        get_audio(sentence)
+        play_mp3("/tmp/spell_audio.mp3")
+        print_definitions(word)
+        sleep(4)
+  sentence = "You got "+str(ncorrect)+" correct out of "+str(nwords)+" or "+str(int(round(ncorrect/nwords*100)))+" percent."
+  print(sentence)
+  get_audio(sentence)
+  play_mp3("/tmp/spell_audio.mp3")
+  sleep(2)
+except IOError:
+  print("There is no file '"+argv[1]+"'!")
+except IndexError:
+  print("You must provide a file name!")
