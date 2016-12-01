@@ -18,3 +18,8 @@ In additional, the script requires `python-vlc` to play the audio (and hence vlc
     $ pip install ivona_api
     $ pip install wordnik
     $ pip install python-vlc
+
+# To do
+
+ 1. save the `mp3` files to a cache so that the same sentences are not repeatedly downloaded.
+ 2. put it all in a gui
