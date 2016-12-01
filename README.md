@@ -2,7 +2,7 @@
 
 A very basic Python 2.7 script (command line terminal) that:
  1. reads in a list of words
- 2. randomize them
+ 2. randomizes them
  3. ask the student to spell each word with the option to repeat the word or to give up
  4. upon completion of each word, the definition is printed out.
 
