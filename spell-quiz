@@ -15,8 +15,7 @@ ivona_api = IvonaAPI(keys['ivona-access-key'],keys['ivona-secret-key'],voice_nam
 # import wordnik API
 from wordnik import *
 apiUrl = 'http://api.wordnik.com/v4'
-apiKey = '***REMOVED***'
-client = swagger.ApiClient(apiKey, apiUrl)
+client = swagger.ApiClient(keys['wordnik-key'], apiUrl)
 wordApi = WordApi.WordApi(client)
 
 # download audio from Amazon's ivona and save
