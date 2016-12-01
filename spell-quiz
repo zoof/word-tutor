@@ -21,18 +21,18 @@ wordApi = WordApi.WordApi(client)
 
 # download audio from Amazon's ivona and save
 def get_audio(sentence):
-    ivona_api.text_to_speech(sentence,'/tmp/spell_audio.mp3')
+  ivona_api.text_to_speech(sentence,'/tmp/spell_audio.mp3')
 
 # play saved mp3 file
 def play_mp3(fn):
-    vlc.MediaPlayer("file://"+fn).play()
-    sleep(2)
+  vlc.MediaPlayer("file://"+fn).play()
+  sleep(2)
 
 # print definitions of word
 def print_definitions(word):
-    definitions = wordApi.getDefinitions(word)
-    for i,definition in enumerate(definitions):
-        print(i+1,definition.text)
+  definitions = wordApi.getDefinitions(word, sourceDictionaries='ahd')
+  for i,definition in enumerate(definitions):
+    print(i+1,definition.text)
 
 try:
   word_list = open(argv[1]).read().strip().lower().split('\n')
