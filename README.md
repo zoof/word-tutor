@@ -1,6 +1,10 @@
 # Word Tutor
 
-A very basic Python 2.7 script (command line terminal) that reads in a list of words, randomized them and then asks the student to spell each word in turn.  Upon completion of each word, the definition is printed out.
+A very basic Python 2.7 script (command line terminal) that:
+ 1. reads in a list of words
+ 2. randomized them
+ 3. asks the student to spell each word with the option to repeat the word or to give up
+ 4. upon completion of each word, the definition is printed out.
 
 There are two APIs being used to drive this. The first is Amazon's Ivona service for the text to speech (`ivona_api`).  The second is wordnik to look up definitions (`wordnik`). Access to these APIs requires registering with each service to get access keys which are put into a file `secret.yaml`.  This file takes the following form:
 
