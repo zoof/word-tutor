@@ -23,3 +23,7 @@ In additional, the script requires `python-vlc` to play the audio (and hence vlc
 
  1. save the `mp3` files to a cache so that the same sentences are not repeatedly downloaded.
  2. put it all in a gui
+
+# Known issues
+
+ 1. Need to add callback/event manager to prevent vlc "collisions."
