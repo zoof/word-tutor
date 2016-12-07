@@ -26,4 +26,4 @@ In additional, the script requires `python-vlc` to play the audio (and hence vlc
 
 # Known issues
 
- 1. ~~Need to add callback/event manager to prevent `vlc` "collisions."~~ Problem does not appear to be due to collisions.  Added sleep time and `python-vlc still crashed`.  Will post on `vlc` forum to see if anyone has suggestions.
+ 1. ~~Need to add callback/event manager to prevent `vlc` "collisions."~~ Problem does not appear to be due to collisions.  Added sleep time and `python-vlc` still crashed.  Will post on `vlc` forum to see if anyone has suggestions.
